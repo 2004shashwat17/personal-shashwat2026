@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { ArrowRight, Check, Contact as Linkedin, ExternalLink, GitFork as Github, Menu, Moon, Play, Sun, X } from 'lucide-react'
-import { site } from './data'
+import { ArrowRight, Check, Contact as Linkedin, Download, ExternalLink, FileText, GitFork as Github, Menu, Moon, Play, Sun, X } from 'lucide-react'
+import { resumes, site } from './data'
 
 export function SmartLink({ href, className = '', children }: { href: string; className?: string; children: ReactNode }) {
   const placeholder = href.includes('[') || !href
@@ -13,9 +13,8 @@ export function SmartLink({ href, className = '', children }: { href: string; cl
 export function ArrowIcon() { return <ArrowRight size={16} strokeWidth={1.8} aria-hidden="true" /> }
 
 const nav = [
-  ['Home', '/#home'], ['Work', '/#work'], ['Product Thinking', '/#thinking'], ['Skills', '/#skills'],
-  ['Experience', '/#experience'], ['Achievements', '/#achievements'], ['Certifications', '/#certifications'],
-  ['Content', '/#content'], ['About', '/#about'], ['Resume', '/resume'], ['Contact', '/#contact'],
+  ['Home', '/#home'], ['About', '/#about'], ['Experience', '/#experience'], ['Projects', '/#projects'],
+  ['Skills', '/#skills'], ['Resume', '/#resume'], ['Contact', '/#contact'],
 ]
 
 export function Header() {
@@ -45,16 +44,22 @@ export function Header() {
 
 export function Footer() {
   return <footer className="footer"><div className="footer-grid">
-    <div><Link to="/" className="brand"><span>S</span> Shashwat</Link><p>Product Manager & Product Builder</p><p className="muted">Working at the intersection of business, technology and product development.</p></div>
-    <div><strong>Explore</strong>{['Work', 'About', 'Product Thinking', 'Skills', 'Achievements', 'Certifications', 'Resume', 'Contact'].map(x => <a key={x} href={x === 'Resume' ? '/resume' : `/#${x.toLowerCase().replace('product thinking', 'thinking')}`}>{x}</a>)}</div>
+    <div><Link to="/" className="brand"><span>S</span> Shashwat</Link><p>Technical Product Manager | Software Engineer</p><p className="muted">Product thinking + engineering execution + growth mindset. Building at the intersection of product and code.</p></div>
+    <div><strong>Explore</strong>{['About', 'Experience', 'Projects', 'Skills', 'Resume', 'Contact'].map(x => <a key={x} href={`/#${x.toLowerCase()}`}>{x}</a>)}</div>
+    <div><strong>Resumes</strong>{resumes.map(r => <a key={r.id} href={r.file} target="_blank" rel="noopener noreferrer">{r.title}</a>)}</div>
     <div><strong>Connect</strong><SmartLink href={site.linkedin}>LinkedIn</SmartLink><SmartLink href={site.github}>GitHub</SmartLink><SmartLink href={`mailto:${site.email}`}>Email</SmartLink></div>
-    <div><strong>Clientalio</strong><SmartLink href="https://clientalio.com/">Website</SmartLink><SmartLink href="https://www.instagram.com/clientalio/">Instagram</SmartLink><SmartLink href="https://x.com/Clientalio/">X</SmartLink></div>
-  </div><div className="footer-bottom"><span>© {new Date().getFullYear()} Shashwat. All rights reserved.</span><span>Designed around product, business & technology.</span></div></footer>
+  </div><div className="footer-bottom"><span>© {new Date().getFullYear()} Shashwat. All rights reserved.</span><span>Product thinking + Engineering execution + Growth mindset.</span></div></footer>
 }
 
 export function Layout({ children }: { children: ReactNode }) {
   const location = useLocation()
-  useEffect(() => { window.scrollTo({ top: 0, behavior: 'instant' }); }, [location.pathname])
+  useEffect(() => {
+    if (location.hash) {
+      const el = document.getElementById(location.hash.slice(1))
+      if (el) { el.scrollIntoView({ behavior: 'instant', block: 'start' }); return }
+    }
+    window.scrollTo({ top: 0, behavior: 'instant' })
+  }, [location.pathname, location.hash])
   return <><Header /><main>{children}</main><Footer /></>
 }
 
@@ -107,3 +112,17 @@ export function Seo({ title, description, type = 'website' }: { title: string; d
 }
 
 export function ExternalIcon() { return <ExternalLink size={14} aria-hidden="true" /> }
+
+/* Shared resume chooser — three tailored versions of the same experience. */
+export function ResumeCards() {
+  return <div className="resume-cards">{resumes.map(r => <article className="resume-card" key={r.id} style={{ '--accent': r.accent } as React.CSSProperties}>
+    <span className="resume-card-icon"><FileText size={19} strokeWidth={1.6} aria-hidden="true" /></span>
+    <small className="resume-card-kicker">{r.kicker}</small>
+    <h3>{r.title}</h3>
+    <p>{r.description}</p>
+    <div className="resume-card-actions">
+      <a className="button" href={r.file} target="_blank" rel="noopener noreferrer" aria-label={`View the ${r.title} resume — opens in a new tab`}>View Resume <ExternalLink size={15} aria-hidden="true" /></a>
+      <a className="button secondary" href={r.file} download aria-label={`Download the ${r.title} resume as PDF`}>Download PDF <Download size={15} aria-hidden="true" /></a>
+    </div>
+  </article>)}</div>
+}

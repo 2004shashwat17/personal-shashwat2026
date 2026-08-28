@@ -1,13 +1,50 @@
 export const site = {
   name: 'Shashwat',
-  title: 'Product Manager & Product Builder',
-  description: 'Shashwat is a Product Manager and Product Builder working across SaaS, logistics, WMS, web, mobile and technology products.',
+  title: 'Technical Product Manager | Software Engineer',
+  description: 'Shashwat is a technical product builder who understands both product and engineering — working across product strategy, SaaS, logistics / WMS, web and mobile products.',
   domain: '[PLACEHOLDER_DOMAIN]',
   email: '[PLACEHOLDER_EMAIL]',
   github: '[PLACEHOLDER_GITHUB_URL]',
   linkedin: 'https://www.linkedin.com/in/buildwithshashwat/',
-  resume: '[RESUME_PDF_URL]',
+  resume: '/Shashwat-TPM.pdf',
 }
+
+export type ResumeVersion = {
+  id: string
+  kicker: string
+  title: string
+  description: string
+  file: string
+  accent: string
+}
+
+/* The three resume PDFs live in /public — one tailored lens per role. */
+export const resumes: ResumeVersion[] = [
+  {
+    id: 'pm',
+    kicker: 'For product roles',
+    title: 'Product Manager',
+    description: 'Focused on product strategy, execution, growth, user experience, and business impact.',
+    file: '/Shashwat-PM.pdf',
+    accent: '#55d7ff',
+  },
+  {
+    id: 'tpm',
+    kicker: 'For technical PM roles',
+    title: 'Technical Product Manager',
+    description: 'Combines product management with hands-on engineering, APIs, architecture, technical execution, and cross-functional delivery.',
+    file: '/Shashwat-TPM.pdf',
+    accent: '#8cffb5',
+  },
+  {
+    id: 'sde',
+    kicker: 'For engineering roles',
+    title: 'Software Engineer',
+    description: 'Focused on frontend, backend, APIs, databases, cloud infrastructure, and production software development.',
+    file: '/sde-shashwat.pdf',
+    accent: '#a995ff',
+  },
+]
 
 export type Product = {
   slug: string
@@ -100,6 +137,72 @@ export const products: Product[] = [
   },
 ]
 
+export type FeaturedProject = {
+  index: string
+  name: string
+  status: string
+  accent: string
+  description: string
+  highlights: string[]
+  stack: string[]
+  metric?: { value: string; label: string }
+  url?: string
+  urlLabel?: string
+}
+
+export const featuredProjects: FeaturedProject[] = [
+  {
+    index: '01',
+    name: 'DropProof',
+    status: 'In production',
+    accent: '#8cffb5',
+    description: 'Delivery management platform covering the full operational loop — from the web dashboard and reports to the driver apps in the field.',
+    highlights: [
+      'Product and dashboard development',
+      '.NET backend',
+      'Reports and billing / payment workflows',
+      'React Native driver applications',
+      'Android and iOS builds and releases',
+    ],
+    stack: ['.NET', 'React', 'React Native', 'Android', 'iOS'],
+    metric: { value: '263', label: 'active users in the last 28 days' },
+    url: 'https://dropproof.app/',
+    urlLabel: 'dropproof.app',
+  },
+  {
+    index: '02',
+    name: 'SpeedPilot',
+    status: 'In production',
+    accent: '#ffbc6e',
+    description: 'Speed-testing platform that turns raw network measurements into a clear, usable product experience.',
+    highlights: [
+      'React-based speed testing platform built on LibreSpeed',
+      'Backend services for test handling and results',
+      'CORS and server configuration',
+      'DigitalOcean hosting and production deployment',
+    ],
+    stack: ['React', 'LibreSpeed', 'Node.js', 'DigitalOcean'],
+    url: 'https://speedpilot.io/',
+    urlLabel: 'speedpilot.io',
+  },
+  {
+    index: '03',
+    name: 'Social Media Intelligence Platform',
+    status: 'Full-stack build',
+    accent: '#55d7ff',
+    description: 'A platform that collects, processes and analyzes social media data — from automated collection to sentiment insights.',
+    highlights: [
+      'React frontend with authentication and access control',
+      'Node.js APIs with MongoDB and Redis',
+      'Automated data collection and processing',
+      'Sentiment analysis',
+      'Python / Flask services, Docker and AWS deployment',
+      'Webhook-driven integrations',
+    ],
+    stack: ['React', 'Node.js', 'MongoDB', 'Redis', 'Python / Flask', 'Docker', 'AWS', 'Webhooks'],
+  },
+]
+
 export const skillGroups = [
   { name: 'Product', intro: 'From ambiguity to structured, testable product decisions.', items: ['Product Management', 'Product Strategy', 'Product Discovery', 'Requirement Gathering', 'Requirement Analysis', 'Feature Definition', 'User Workflows', 'User Stories', 'Acceptance Criteria', 'Product Roadmapping', 'Feature Prioritization', 'MVP Planning', 'Product Documentation', 'User Feedback', 'Product Iteration', 'Cross-functional Collaboration', 'Agile Product Development', 'Stakeholder Communication', 'Problem Solving', 'Product Thinking', 'Business Requirement Analysis', 'Process Mapping', 'Operational Workflow Design'] },
   { name: 'Business', intro: 'Connecting customer and operational context with product direction.', items: ['Business Analysis', 'Business Process Understanding', 'Customer Problem Identification', 'Stakeholder Management', 'Client Communication', 'Business Workflow Analysis', 'Market Research', 'Competitive Research', 'Customer Feedback', 'SaaS Business Understanding', 'Startup/Product Thinking', 'Go-to-Market Understanding', 'Product Positioning', 'Basic SEO / Search Intent', 'Social Proof / Customer Trust', 'B2B Product Thinking'] },
@@ -135,15 +238,13 @@ export const certifications = Array.from({ length: 9 }, (_, index) => ({
 }))
 
 export const experience = [
-  { company: 'BWays Techno Solution', role: 'Product Manager', duration: '[ADD DATES] — Present', description: 'Working across product requirements, workflows, engineering collaboration, testing and delivery.', products: '[ADD VERIFIED PRODUCTS]', skills: ['Product Management', 'Requirements', 'Engineering Collaboration'], achievements: '[Add verified achievements]' },
-  { company: 'Enalytechs', role: '[ADD VERIFIED ROLE]', duration: '[ADD DATES]', description: 'Previous professional experience. Add a verified role summary and responsibilities.', products: '[ADD VERIFIED PRODUCTS]', skills: ['Software Products', 'Collaboration'], achievements: '[Add verified achievements]' },
-  { company: 'Logistics / WMS', role: 'Domain experience', duration: '[ADD DATES]', description: 'Experience with operational workflows across logistics and warehouse-management contexts.', products: 'Logistics software / WMS', skills: ['Process Mapping', 'Business Rules', 'Operational Workflows'], achievements: '[Add verified outcomes]' },
-  { company: 'SaaS Product Development', role: 'Product projects', duration: '[ADD DATES]', description: 'Building and working on web, mobile and SaaS products.', products: 'Clientalio / DropProof / Labelium / SpeedPilot', skills: ['SaaS', 'Product Development', 'Web & Mobile'], achievements: '[Add verified outcomes]' },
+  { company: 'BWays Techno Solution', role: 'Product Manager', duration: 'Current role', description: 'Working across product requirements, workflows, engineering collaboration, testing and delivery for products used in real, time-sensitive operations.', skills: ['Product Management', 'Requirements', 'Engineering Collaboration', 'Delivery'] },
+  { company: 'Enalytechs', role: 'Software Engineer', duration: 'Earlier', description: 'Early professional experience building software products and working closely across engineering and product teams.', skills: ['Software Development', 'Software Products', 'Collaboration'] },
+  { company: 'Independent Product Building', role: 'Product projects', duration: 'Ongoing', description: 'Building products of my own across SaaS, logistics and web — including Clientalio, DropProof, Labelium and SpeedPilot.', skills: ['SaaS', 'Product Development', 'Web & Mobile'] },
 ]
 
 export const education = [
-  { university: 'Golden Gate University', program: 'MBA', status: 'MBA Candidate', location: 'USA', startYear: '[ADD YEAR]', completion: '[ADD EXPECTED COMPLETION]', subjects: '[ADD RELEVANT SUBJECTS]', highlights: '[ADD LEARNING HIGHLIGHTS]', url: '[ADD UNIVERSITY LINK]' },
-  { university: '[ADD UNIVERSITY]', program: 'BTech', status: '[ADD STATUS]', location: '[ADD LOCATION]', startYear: '[ADD YEAR]', completion: '[ADD YEAR]', subjects: '[ADD RELEVANT SUBJECTS]', highlights: '[ADD LEARNING HIGHLIGHTS]', url: '[ADD UNIVERSITY LINK]' },
+  { university: 'Golden Gate University', program: 'MBA', status: 'MBA Candidate', location: 'USA', startYear: 'In progress', completion: '', subjects: '', highlights: '', url: '' },
 ]
 
 export const journey = ['BTech', 'Full-Stack & Mobile Development', 'Enalytechs', 'BWays Techno Solution', 'Logistics / WMS', 'Clientalio', 'DropProof', 'Labelium', 'SpeedPilot', 'MBA — Golden Gate University']
