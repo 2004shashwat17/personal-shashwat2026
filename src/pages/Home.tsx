@@ -1,5 +1,5 @@
 import { ArrowUpRight, Contact as Linkedin, FileText, GitBranch, Mail, MessagesSquare, Route, Target, TrendingUp, Users } from 'lucide-react'
-import { ArrowIcon, ExternalIcon, ResumeCards, SectionHead, Seo, SmartLink } from '../components'
+import { AchievementsGrid, ArrowIcon, CertificationsGrid, ExternalIcon, ResumeCards, SectionHead, Seo, SmartLink } from '../components'
 import { experience, featuredProjects, products, site, skillGroups, tools } from '../data'
 
 const mindset = [
@@ -57,16 +57,24 @@ export function Home() {
       </article>)}</div>
     </section>
 
-    <section className="section bordered" id="skills"><SectionHead eyebrow="04 / TECHNICAL SKILLS" title="Business + Product + Technology" copy="No proficiency scores—just the capabilities I use and continue to develop through real product work." />
+    <section className="section" id="achievements"><SectionHead eyebrow="04 / ACHIEVEMENTS" title="Hackathons, wins and recognition" copy="Competitions, showcases and programs I've taken part in — each card links to the original certificate or document." />
+      <AchievementsGrid />
+    </section>
+
+    <section className="section section-tint" id="certifications"><SectionHead eyebrow="05 / CERTIFICATIONS" title="Courses and certified skills" copy="Certifications across AI, frontend, backend and software engineering — verifiable through the issuing platforms." />
+      <CertificationsGrid />
+    </section>
+
+    <section className="section bordered" id="skills"><SectionHead eyebrow="06 / TECHNICAL SKILLS" title="Business + Product + Technology" copy="No proficiency scores—just the capabilities I use and continue to develop through real product work." />
       <div className="skills-grid">{skillGroups.map((group, i) => <article key={group.name}><span className="skill-index">0{i + 1}</span><h3>{group.name}</h3><p>{group.intro}</p><div className="tag-cloud">{group.items.map(x => <span key={x}>{x}</span>)}</div></article>)}</div>
       <div className="tools-row"><div><p className="eyebrow">TOOLS & WORKFLOW</p><h3>Practical, daily toolkit</h3><p>The tools I actually use across product and engineering work.</p></div><div className="tag-cloud tools">{tools.map(x => <span key={x}>{x}</span>)}</div></div>
     </section>
 
-    <section className="section" id="capabilities"><SectionHead eyebrow="05 / PRODUCT & BUSINESS CAPABILITIES" title="What I bring beyond the code" copy="The product and business capabilities I use alongside hands-on engineering." />
+    <section className="section" id="capabilities"><SectionHead eyebrow="07 / PRODUCT & BUSINESS CAPABILITIES" title="What I bring beyond the code" copy="The product and business capabilities I use alongside hands-on engineering." />
       <div className="capability-grid">{capabilities.map(({ icon: Icon, title, copy }) => <article key={title}><Icon size={21} strokeWidth={1.5} aria-hidden="true" /><h3>{title}</h3><p>{copy}</p></article>)}</div>
     </section>
 
-    <section className="section bordered" id="resume"><SectionHead eyebrow="06 / RESUME" title="Choose the resume that fits your role" copy="Different roles highlight different parts of my experience. Choose the version most relevant to the position you're hiring for." />
+    <section className="section bordered" id="resume"><SectionHead eyebrow="08 / RESUME" title="Choose the resume that fits your role" copy="Different roles highlight different parts of my experience. Choose the version most relevant to the position you're hiring for." />
       <ResumeCards />
     </section>
 

@@ -226,16 +226,168 @@ export const socialPosts = [
   { title: 'Add a selected LinkedIn post', url: '', thumbnail: '', category: 'Product Building', date: '[ADD DATE]', description: 'Configure a post URL, title, thumbnail and short context without relying on scraping.' },
 ]
 
-export const achievements = Array.from({ length: 6 }, (_, index) => ({
-  title: `Achievement ${String(index + 1).padStart(2, '0')}`, organization: '[ADD ORGANIZATION]', date: '[ADD DATE]',
-  description: '[Add a verified achievement description]', verificationUrl: '[ADD VERIFICATION LINK]', image: '[UPLOAD IMAGE / DOCUMENT]',
-}))
+export type Achievement = {
+  title: string
+  organization: string
+  date: string
+  description: string
+  file: string
+  kind: 'image' | 'pdf'
+  accent: string
+}
 
-export const certifications = Array.from({ length: 9 }, (_, index) => ({
-  name: `Certification ${String(index + 1).padStart(2, '0')}`, issuer: index === 0 ? 'Infosys — exact certification name to verify' : '[ADD ISSUING ORGANIZATION]',
-  issueDate: '[ADD ISSUE DATE]', credentialId: '[ADD CREDENTIAL ID]', credentialUrl: `[VERIFY_CERTIFICATE_${String(index + 1).padStart(2, '0')}]`,
-  document: '[UPLOAD CERTIFICATE IMAGE / PDF]', description: index === 0 ? 'Infosys Certified — details remain editable pending verification.' : '[ADD DESCRIPTION]',
-}))
+/* Every entry points at a real file in /public/Achievements — paths are byte-exact. */
+export const achievements: Achievement[] = [
+  {
+    title: 'IDEATHON 2.0 — 1st Prize',
+    organization: 'Bennett University · School of Engineering and Applied Sciences',
+    date: 'April 18, 2024',
+    description: 'Award certificate — Team Symbiosis won 1st Prize in IDEATHON 2.0, organized by SEAS, Bennett University.',
+    file: '/Achievements/Ideathon 2.0 Symbiosis.png',
+    kind: 'image',
+    accent: '#8cffb5',
+  },
+  {
+    title: 'Smart BU Hackathon 2024 — Rank 4',
+    organization: 'Team HealioQuest',
+    date: 'August 31 – September 1, 2024',
+    description: 'Team HealioQuest secured Rank 4 at the Smart BU Hackathon 2024.',
+    file: '/Achievements/smart india hackathon.pdf',
+    kind: 'pdf',
+    accent: '#55d7ff',
+  },
+  {
+    title: 'HackwithMAIT 5.0 — Round 1 Qualifier',
+    organization: 'Maharaja Agrasen Institute of Technology (MAIT)',
+    date: 'October 24–26, 2024',
+    description: 'Qualified Round 1 in the Innovative Track of HackwithMAIT 5.0.',
+    file: '/Achievements/Mait_Shashwat.PDF',
+    kind: 'pdf',
+    accent: '#a995ff',
+  },
+  {
+    title: 'TechArena 2025 — Project Showcase',
+    organization: 'Bennett University',
+    date: 'January 15, 2025',
+    description: 'Showcased a project at TechArena 2025.',
+    file: '/Achievements/techarena.pdf',
+    kind: 'pdf',
+    accent: '#55d7ff',
+  },
+  {
+    title: 'Web Development Mentorship Program',
+    organization: 'Teachnook',
+    date: 'June 2024',
+    description: 'One-month mentorship program on web development (01/06/2024 – 30/06/2024). Program ID TNK2404-062457.',
+    file: '/Achievements/Internship Certificate.pdf',
+    kind: 'pdf',
+    accent: '#8cffb5',
+  },
+  {
+    title: 'Hackfest — Participation',
+    organization: 'GeeksforGeeks · Delhi NCR',
+    date: '',
+    description: 'Certificate of Participation for Hackfest, issued by the GeeksforGeeks Delhi NCR community.',
+    file: '/Achievements/geeksforgeeks.jpg',
+    kind: 'image',
+    accent: '#a995ff',
+  },
+]
+
+export type Certification = {
+  name: string
+  issuer: string
+  issueDate: string
+  credentialId: string
+  credentialUrl: string
+  document: string
+  description: string
+  accent: string
+}
+
+/* Every entry points at a real file in /public/certifieds — paths are byte-exact. */
+export const certifications: Certification[] = [
+  {
+    name: 'Elements of AI',
+    issuer: 'University of Helsinki × MinnaLearn',
+    issueDate: 'October 12, 2025',
+    credentialId: 'v6rn1u4wb4b',
+    credentialUrl: 'https://certificates.mooc.fi/validate/v6rn1u4wb4b',
+    document: '/certifieds/University Of Helsinki, Finland.png',
+    description: 'Certificate of completion for the 2-ECTS-credit Elements of AI online course.',
+    accent: '#a995ff',
+  },
+  {
+    name: 'C++ Object Basics: Functions, Recursion, and Objects',
+    issuer: 'Coursera · Codio',
+    issueDate: 'January 16, 2025',
+    credentialId: '46ROGIKFENAJ',
+    credentialUrl: 'https://www.coursera.org/verify/46ROGIKFENAJ',
+    document: '/certifieds/c++basic6thsem.pdf',
+    description: 'C++ course covering functions, recursion and objects, offered by Codio on Coursera.',
+    accent: '#55d7ff',
+  },
+  {
+    name: 'C++ DSA Course',
+    issuer: 'Apna College',
+    issueDate: '',
+    credentialId: '67b62a871334bc9bd80c50a8',
+    credentialUrl: '',
+    document: '/certifieds/certificate-c-dsa-66d2d5b500dd6c2835085f47.pdf',
+    description: 'Apna College certificate for successfully completing the course of C++ DSA.',
+    accent: '#8cffb5',
+  },
+  {
+    name: 'Software Project Management Training (PMP)',
+    issuer: 'Infosys',
+    issueDate: 'September 9, 2024',
+    credentialId: '',
+    credentialUrl: '',
+    document: '/certifieds/Software Project Management Training (PMP).pdf',
+    description: 'Infosys training program on software project management.',
+    accent: '#55d7ff',
+  },
+  {
+    name: 'Complete NodeJS Developer (GraphQL, MongoDB, + more)',
+    issuer: 'Udemy · Andrei Neagoie, Adam Odziemkowski',
+    issueDate: 'July 16, 2024',
+    credentialId: 'UC-1784d471-ab83-4cdc-bd18-705fd381d722',
+    credentialUrl: 'https://ude.my/UC-1784d471-ab83-4cdc-bd18-705fd381d722',
+    document: '/certifieds/backend.pdf',
+    description: '46.5-total-hour course covering Node.js development with GraphQL, MongoDB and more.',
+    accent: '#8cffb5',
+  },
+  {
+    name: 'React JS Masterclass: Zero To Job Ready With 10 Projects',
+    issuer: 'Udemy · Shubham Sarda',
+    issueDate: 'May 27, 2024',
+    credentialId: 'UC-6b504b48-1b08-4ab1-82c8-e90b4088beed',
+    credentialUrl: 'https://ude.my/UC-6b504b48-1b08-4ab1-82c8-e90b4088beed',
+    document: '/certifieds/react.pdf',
+    description: '35-total-hour React course completed with 10 projects.',
+    accent: '#55d7ff',
+  },
+  {
+    name: 'Developing Front-End Apps with React',
+    issuer: 'Coursera · IBM',
+    issueDate: 'February 13, 2024',
+    credentialId: 'PUZUXVQ3WFKC',
+    credentialUrl: 'https://www.coursera.org/verify/PUZUXVQ3WFKC',
+    document: '/certifieds/full stack cetrificate.pdf',
+    description: 'IBM course on developing front-end applications with React.',
+    accent: '#a995ff',
+  },
+  {
+    name: 'Software Engineering',
+    issuer: 'Infosys Springboard',
+    issueDate: 'August 27, 2023',
+    credentialId: '',
+    credentialUrl: '',
+    document: '/certifieds/softwareenginnering.pdf',
+    description: 'Infosys Springboard certification in Software Engineering.',
+    accent: '#55d7ff',
+  },
+]
 
 export const experience = [
   { company: 'BWays Techno Solution', role: 'Product Manager', duration: 'Current role', description: 'Working across product requirements, workflows, engineering collaboration, testing and delivery for products used in real, time-sensitive operations.', skills: ['Product Management', 'Requirements', 'Engineering Collaboration', 'Delivery'] },

@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { ArrowRight, Check, Contact as Linkedin, Download, ExternalLink, FileText, GitFork as Github, Menu, Moon, Play, Sun, X } from 'lucide-react'
-import { resumes, site } from './data'
+import { ArrowRight, Check, Contact as Linkedin, Download, ExternalLink, FileText, GitFork as Github, Maximize2, Menu, Moon, Play, Sun, X } from 'lucide-react'
+import { achievements, certifications, resumes, site, type Achievement } from './data'
 
 export function SmartLink({ href, className = '', children }: { href: string; className?: string; children: ReactNode }) {
   const placeholder = href.includes('[') || !href
@@ -14,6 +14,7 @@ export function ArrowIcon() { return <ArrowRight size={16} strokeWidth={1.8} ari
 
 const nav = [
   ['Home', '/#home'], ['About', '/#about'], ['Experience', '/#experience'], ['Projects', '/#projects'],
+  ['Achievements', '/#achievements'], ['Certifications', '/#certifications'],
   ['Skills', '/#skills'], ['Resume', '/#resume'], ['Contact', '/#contact'],
 ]
 
@@ -45,7 +46,7 @@ export function Header() {
 export function Footer() {
   return <footer className="footer"><div className="footer-grid">
     <div><Link to="/" className="brand"><span>S</span> Shashwat</Link><p>Technical Product Manager | Software Engineer</p><p className="muted">Product thinking + engineering execution + growth mindset. Building at the intersection of product and code.</p></div>
-    <div><strong>Explore</strong>{['About', 'Experience', 'Projects', 'Skills', 'Resume', 'Contact'].map(x => <a key={x} href={`/#${x.toLowerCase()}`}>{x}</a>)}</div>
+    <div><strong>Explore</strong>{['About', 'Experience', 'Projects', 'Achievements', 'Certifications', 'Skills', 'Resume', 'Contact'].map(x => <a key={x} href={`/#${x.toLowerCase()}`}>{x}</a>)}</div>
     <div><strong>Resumes</strong>{resumes.map(r => <a key={r.id} href={r.file} target="_blank" rel="noopener noreferrer">{r.title}</a>)}</div>
     <div><strong>Connect</strong><SmartLink href={site.linkedin}>LinkedIn</SmartLink><SmartLink href={site.github}>GitHub</SmartLink><SmartLink href={`mailto:${site.email}`}>Email</SmartLink></div>
   </div><div className="footer-bottom"><span>© {new Date().getFullYear()} Shashwat. All rights reserved.</span><span>Product thinking + Engineering execution + Growth mindset.</span></div></footer>
@@ -125,4 +126,62 @@ export function ResumeCards() {
       <a className="button secondary" href={r.file} download aria-label={`Download the ${r.title} resume as PDF`}>Download PDF <Download size={15} aria-hidden="true" /></a>
     </div>
   </article>)}</div>
+}
+
+/* ── Achievements — images open in a lightbox, PDFs open in a new tab ── */
+export function AchievementsGrid() {
+  const [zoom, setZoom] = useState<Achievement | null>(null)
+  useEffect(() => {
+    if (!zoom) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setZoom(null) }
+    window.addEventListener('keydown', onKey)
+    document.body.style.overflow = 'hidden'
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = '' }
+  }, [zoom])
+  return <>
+    <div className="placeholder-grid achievements">
+      {achievements.map((a, i) => <article className="ach-card" key={a.title} style={{ '--accent': a.accent } as React.CSSProperties}>
+        <div className="ach-head"><span className="idx">{String(i + 1).padStart(2, '0')}</span><span className="ach-kind">{a.kind === 'pdf' ? 'PDF' : 'PHOTO'}</span></div>
+        {a.kind === 'image'
+          ? <button type="button" className="ach-thumb" onClick={() => setZoom(a)} aria-label={`Enlarge the ${a.title} certificate`}><img src={a.file} alt={`${a.title} — ${a.organization}`} loading="lazy" /></button>
+          : <a className="ach-thumb ach-thumb-doc" href={a.file} target="_blank" rel="noopener noreferrer" aria-label={`Open the ${a.title} document (PDF, opens in a new tab)`}><FileText size={30} strokeWidth={1.3} aria-hidden="true" /><b>OPEN DOCUMENT</b></a>}
+        <div className="ach-body">
+          <h3>{a.title}</h3>
+          <p className="ach-meta">{a.organization}{a.date && <> · {a.date}</>}</p>
+          <p>{a.description}</p>
+          <div className="ach-actions">
+            {a.kind === 'image'
+              ? <button type="button" className="text-link" onClick={() => setZoom(a)}>View full certificate <Maximize2 size={13} aria-hidden="true" /></button>
+              : <a className="text-link" href={a.file} target="_blank" rel="noopener noreferrer">View document <ExternalIcon /></a>}
+          </div>
+        </div>
+      </article>)}
+    </div>
+    {zoom && <div className="lightbox" role="dialog" aria-modal="true" aria-label={`${zoom.title} certificate`} onClick={() => setZoom(null)}>
+      <button type="button" className="lightbox-close" aria-label="Close certificate preview" onClick={() => setZoom(null)}><X size={18} /></button>
+      <figure onClick={e => e.stopPropagation()}>
+        <img src={zoom.file} alt={`${zoom.title} — ${zoom.organization}`} />
+        <figcaption>{zoom.title}{zoom.organization && ` · ${zoom.organization}`}{zoom.date && ` · ${zoom.date}`}</figcaption>
+      </figure>
+    </div>}
+  </>
+}
+
+/* ── Certifications — documents open in a new tab, verify links only when real ── */
+export function CertificationsGrid() {
+  return <div className="placeholder-grid certifications">
+    {certifications.map((c, i) => <article className="cert-card" key={c.name} style={{ '--accent': c.accent } as React.CSSProperties}>
+      <div className="cert-head"><span className="idx">{String(i + 1).padStart(2, '0')}</span><span className="cert-kind">{/\.pdf$/i.test(c.document) ? 'PDF' : 'CERTIFICATE'}</span></div>
+      <div className="cert-body">
+        <h3>{c.name}</h3>
+        <p className="cert-meta">{c.issuer}{c.issueDate && <> · {c.issueDate}</>}</p>
+        <p>{c.description}</p>
+        {(c.credentialId || c.credentialUrl) && <div className="cert-cred">
+          {c.credentialId && <span>ID <b>{c.credentialId}</b></span>}
+          {c.credentialUrl && <SmartLink href={c.credentialUrl} className="text-link">Verify credential <ExternalIcon /></SmartLink>}
+        </div>}
+        <div className="cert-actions"><a className="text-link" href={c.document} target="_blank" rel="noopener noreferrer" aria-label={`View the ${c.name} certificate (opens in a new tab)`}>View certificate <ExternalIcon /></a></div>
+      </div>
+    </article>)}
+  </div>
 }
